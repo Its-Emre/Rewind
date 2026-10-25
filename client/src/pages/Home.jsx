@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../lib/api";
 import Row from "../components/Row";
+import DriveImage from "../components/DriveImage";
 import { formatDate } from "../components/MemoryCard";
 
 const isOnThisDay = (value) => {
@@ -15,7 +16,13 @@ function Hero({ memory, eyebrow }) {
   return (
     <section className="relative mb-10 animate-fadeUp overflow-hidden">
       <div className="relative h-[54vh] min-h-[380px] w-full">
-        <img src={heroImg} alt={memory.title} className="h-full w-full object-cover" />
+        <DriveImage
+          driveId={memory.driveId}
+          src={heroImg}
+          alt={memory.title}
+          size={1600}
+          className="h-full w-full object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/35 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink-950/70 via-transparent to-transparent" />
         <div className="absolute inset-x-0 bottom-0 mx-auto max-w-7xl px-4 pb-8 sm:px-6">

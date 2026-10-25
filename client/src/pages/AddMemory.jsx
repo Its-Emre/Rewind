@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, parseDriveIdClient, thumbUrl } from "../lib/api";
+import DriveImage from "../components/DriveImage";
 
 const today = () => new Date().toISOString().slice(0, 10);
 
@@ -84,7 +85,8 @@ export default function AddMemory() {
         </p>
         {previewId && (
           <div className="mt-4 overflow-hidden rounded-2xl ring-1 ring-ink-600">
-            <img
+            <DriveImage
+              driveId={previewId}
               src={thumbUrl(previewId, 1000)}
               alt="Drive preview"
               className="aspect-[16/9] w-full object-cover"

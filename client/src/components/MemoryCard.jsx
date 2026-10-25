@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import DriveImage from "./DriveImage";
 
 export const formatDate = (value) =>
   new Date(value).toLocaleDateString("en-IN", {
@@ -14,10 +15,10 @@ export default function MemoryCard({ memory }) {
       className="group relative block w-60 shrink-0 snap-start overflow-hidden rounded-2xl bg-ink-800 ring-1 ring-ink-700/70 transition duration-300 hover:ring-ember-500/50 sm:w-72"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
-        <img
+        <DriveImage
+          driveId={memory.driveId}
           src={memory.thumbUrl}
           alt={memory.title}
-          loading="lazy"
           className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-transparent to-transparent" />

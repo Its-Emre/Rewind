@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { api } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
 import { formatDate } from "../components/MemoryCard";
+import DriveImage from "../components/DriveImage";
 
 export default function WatchPage() {
   const { id } = useParams();
@@ -124,9 +125,11 @@ export default function WatchPage() {
             />
           </div>
         ) : (
-          <img
+          <DriveImage
+            driveId={memory.driveId}
             src={memory.imageUrl}
             alt={memory.title}
+            size={1600}
             className="mx-auto max-h-[75vh] w-auto max-w-full object-contain"
           />
         )}
