@@ -1,17 +1,21 @@
 import { useState } from "react";
+import { mediaThumbUrl } from "../lib/api";
 
-// Drive artwork with a safety net. Primary art comes from Drive's
-// thumbnail service (via the URL the API stored); if that request fails
-// in the browser — a flaky redirect, a mobile-browser quirk — fall back
-// to the direct googleusercontent form of the same thumbnail, and only
-// then to a branded placeholder.
+// Drive artwork with a safety net, in order:
+//   1. Our server's cached proxy (reliable — Drive throttles browsers)
+//   2. The direct Drive thumbnail URL the API stored
+//   3. The direct googleusercontent form of the same thumbnail
+//   4. A branded placeholder
+// `src` is the direct thumbnail-service URL (stage 2).
 export default function DriveImage({ driveId, src, alt, className, size = 1000 }) {
   const [stage, setStage] = useState(0);
-  const fallback = driveId
-    ? `https://lh3.googleusercontent.com/d/${driveId}=w${size}`
-    : null;
 
-  if (stage >= 2 || (!src && !fallback)) {
+  const stages = [];
+  if (driveId) stages.push(mediaThumbUrl(driveId, size));
+  if (src) stages.push(src);
+  if (driveId) stages.push(`https://lh3.googleusercontent.com/d/${driveId}=w${size}`);
+
+  if (stage >= stages.length) {
     return (
       <div className={`flex items-center justify-center bg-ink-800 ${className || ""}`}>
         <span className="font-display text-4xl font-semibold text-ember-500/50">
@@ -23,7 +27,7 @@ export default function DriveImage({ driveId, src, alt, className, size = 1000 }
 
   return (
     <img
-      src={stage === 0 ? src || fallback : fallback}
+      src={stages[stage]}
       alt={alt}
       loading="lazy"
       className={className}

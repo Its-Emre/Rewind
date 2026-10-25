@@ -67,3 +67,10 @@ export function parseDriveIdClient(input) {
 
 export const thumbUrl = (driveId, size = 1000) =>
   `https://drive.google.com/thumbnail?id=${driveId}&sz=w${size}`;
+
+// Artwork through our own server (cached proxy). Drive's thumbnail
+// endpoints rate-limit direct browser traffic (HTTP 429), so the app
+// loads images from here first and treats the direct Drive URLs as
+// fallbacks.
+export const mediaThumbUrl = (driveId, size = 1000) =>
+  `${API_BASE}/media/${driveId}/thumb?size=${size}`;

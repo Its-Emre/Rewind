@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import memoryRoutes from "./routes/memoryRoutes.js";
+import { getThumb } from "./controllers/mediaController.js";
 
 dotenv.config();
 
@@ -24,6 +25,8 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/memories", memoryRoutes);
+// Drive artwork proxy (public by design — see mediaController.js).
+app.get("/api/media/:driveId/thumb", getThumb);
 
 // 404 for anything else
 app.use((req, res) => {
